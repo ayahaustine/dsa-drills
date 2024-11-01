@@ -39,3 +39,32 @@ animal_dict = {
 s = "hbaroaokm"
 animal_name = find_animal_by_voice(s, animal_dict)
 print(animal_name)  # Output could be 'dog' or 'lion', based on subsequence found.
+
+
+# probable solution 2
+
+def is_subsequence(voice, s):
+    s_idx = 0
+    voice_idx = 0
+    while s_idx < len(s) and voice_idx < len(voice):
+        if voice[voice_idx] == s[s_idx]:
+            voice_idx += 1
+        s_idx += 1
+    return voice_idx == len(voice)
+
+def find_animal_with_voice(s, animals_dict):
+    for animal, voice in animals_dict.items():
+        if is_subsequence(voice, s):
+            return animal
+    return None
+
+# Example usage:
+animals_dict = {
+    'dog': 'bark',
+    'cat': 'meow',
+    'cow': 'moo',
+    'bird': 'tweet'
+}
+
+s = 'abcaaadefmbarkoaor'
+print(find_animal_with_voice(s, animals_dict))  # Output could be 'dog' since "bark" is a subsequence of s
