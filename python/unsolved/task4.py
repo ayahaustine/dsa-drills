@@ -66,7 +66,7 @@ else:
 
 # Possible solution 1
 
-from sympy import symbols, Eq, And, Or, Not
+from sympy import symbols, Eq, And, Or, Not, Xor
 from sympy.logic.inference import satisfiable
 
 # Define symbols for houses
@@ -148,6 +148,85 @@ def print_result(result):
         print(f"  Drink: {result[house_drinks[house]]}\n")
 
 if result: 
+    print_result(result)
+else:
+    print("No solution found")
+
+
+############################################################################
+
+# Possible solution 2
+
+from sympy import symbols, Eq, And, Or
+from sympy.logic.inference import satisfiable
+import itertools
+
+# Help function to define uniqueness among symbols
+def unique_symbols(*args):
+    return And(*[Or(*[Eq(a, b) for a in args]) for b in args])
+
+def print_result(result):
+    # Convert result to str and parse using regex for better readability
+    result_str = str(result)
+    for colour, owner, drink in itertools.product(colours, nationalities, drinks):
+        if result[colour] and result[owner] and result[drink]:
+            house_number = re.search(f"{colour}.(\d)", result_str).group(1)
+            print(f"House {house_number}: Colour {colour}, Owner {owner}, Drink {drink}")
+
+# Define number of houses
+houses = 3
+
+# Define symbols for houses
+house_colours = symbols(f'house_colour:{houses}')
+house_owners = symbols(f'house_owner:{houses}')
+house_drinks = symbols(f'house_drink:{houses}')
+
+# Specific entities
+colours = (blue, green, red) = symbols('blue green red')
+nationalities = (canadian, american, japanese) = symbols('canadian american japanese')
+drinks = (coffee, milk, tea) = symbols('coffee milk tea')
+
+constraints = []
+
+# 1:1 house:nationality
+# each house owned by one nationality
+for house_owner in house_owners:
+    constraints.append(unique_symbols(*[house_owner == nationality for nationality in nationalities]))
+
+# each nationality is assigned to exactly one house
+for nationality in nationalities:
+    constraints.append(unique_symbols(*[house_owner == nationality for house_owner in house_owners]))
+
+# 1:1 house:colour
+# each house is assigned one colour
+for house_colour in house_colours:
+    constraints.append(unique_symbols(*[house_colour == colour for colour in colours]))
+
+# each colour is assigned to one house
+for colour in colours:
+    constraints.append(unique_symbols(*[house_colour == colour for house_colour in house_colours]))
+
+# 1:1 house:drink
+# each house is assigned one drink
+for house_drink in house_drinks:
+    constraints.append(unique_symbols(*[house_drink == drink for drink in drinks]))
+
+# each drink is assigned to one house
+for drink in drinks:
+    constraints.append(unique_symbols(*[house_drink == drink for house_drink in house_drinks]))
+
+# the blue house has milk
+constraints.append(unique_symbols(*[Eq(house_colour == blue, house_drink == milk) for house_colour, house_drink in zip(house_colours, house_drinks)]))
+
+# only the canadian owns the house which has coffee
+constraints.append(unique_symbols(*[And(house_owner == canadian, house_drink == coffee) for house_owner, house_drink in zip(house_owners, house_drinks)]))
+
+# Combine constraints into one logical expression using And
+combined_constraints = And(*constraints)
+
+# Check satisfiability
+result = satisfiable(combined_constraints)
+if result:
     print_result(result)
 else:
     print("No solution found")
