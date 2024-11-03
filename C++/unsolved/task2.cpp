@@ -1,5 +1,5 @@
 /*
-Write a function in Python that will accept input of an array of numbers. 
+Write a function in C++ that will accept input of an array of numbers. 
 From this array, the function should create a 4x4 matrix, filling in the indices in spiral order.
 The first index filled should be the top left, then the first line should go right from there. 
 If the array has more elements than the matrix, replace the last index filled in the matrix with zero. 
