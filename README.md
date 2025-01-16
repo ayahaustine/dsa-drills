@@ -1,3 +1,3 @@
 # tasks-tips-solutions-dsa
 
-- This is my oublic playground for practicing DSA with various technologies.
+- This is my public playground for practicing DSA with various languages.
