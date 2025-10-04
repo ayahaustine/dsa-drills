@@ -1,3 +1,131 @@
+# .gitignore for dsa-drills
+# Purpose: ignore build artifacts, virtual envs, editor files for C++, Python, Go, and Java
+
+# macOS
+.DS_Store
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~
+
+# -----------------------------
+# C / C++
+# -----------------------------
+# object files, libraries, and executables
+*.o
+*.obj
+*.so
+*.a
+*.dylib
+*.out
+*.exe
+
+# static and dynamic libs
+*.lib
+
+# common build directories
+build/
+bin/
+lib/
+obj/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# IDE/project files
+*.vcxproj*
+*.sln
+*.user
+
+# -----------------------------
+# Java
+# -----------------------------
+# compiled class files
+*.class
+
+# packaged archives
+*.jar
+*.war
+*.ear
+
+# build dirs
+/target/
+/out/
+/build/
+
+# Gradle and IDE
+/.gradle/
+/.idea/
+*.iml
+/.classpath
+/.project
+/.settings/
+
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# virtual environments
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+
+# packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# caches and test artifacts
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# python environment helper
+.python-version
+.Python
+
+# local settings
+local_settings.py
+
+# -----------------------------
+# Go
+# -----------------------------
+# binaries and packages
+/bin/
+/pkg/
+/vendor/
+*.test
+*.exe
+
+# Godeps
+Godeps/
+
+# -----------------------------
+# Misc / Logs
+# -----------------------------
+*.log
+*.tmp
+*.cache
+
+# Ensure gitignore itself is tracked
+# (no pattern for .gitignore)
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
